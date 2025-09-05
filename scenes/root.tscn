@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://btvow855xem8r"]
+
+[ext_resource type="PackedScene" uid="uid://ubj17kff76ux" path="res://scenes/main_menu.tscn" id="1_twpsu"]
+[ext_resource type="PackedScene" uid="uid://c3n5y0jr517ax" path="res://scenes/server.tscn" id="2_lrqlo"]
+[ext_resource type="PackedScene" uid="uid://b2jgqjhixhtun" path="res://scenes/map.tscn" id="3_lrqlo"]
+
+[node name="Root" type="Node"]
+
+[node name="Server" parent="." instance=ExtResource("2_lrqlo")]
+
+[node name="MainMenu" parent="." instance=ExtResource("1_twpsu")]
+
+[node name="Map" parent="." instance=ExtResource("3_lrqlo")]
+
+[node name="Players" type="Node" parent="."]
