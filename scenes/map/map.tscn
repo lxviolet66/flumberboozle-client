@@ -23,6 +23,7 @@ adjustment_enabled = true
 adjustment_saturation = 2.05
 
 [node name="Map" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.76837e-07, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.906308, -0.187911, -0.378544, 0, -0.895712, 0.444635, -0.422618, -0.402976, -0.811791, 0.588102, 0.137832, -0.482186)
@@ -31,4 +32,4 @@ transform = Transform3D(0.906308, -0.187911, -0.378544, 0, -0.895712, 0.444635, 
 environment = SubResource("Environment_hrmi8")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(25, 0, 0, 0, 1, 0, 0, 0, 25, 0, 0, 0)
+transform = Transform3D(25, 0, 0, 0, 1, 0, 0, 0, 25, 0, -2.24876, 0)

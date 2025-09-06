@@ -14,7 +14,3 @@ func _process(_delta: float) -> void:
 
 func _physics_process(_delta: float) -> void:
 	pass
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	print(event)

@@ -10,14 +10,16 @@ config_version=5
 
 [application]
 
-config/name="flumberboozle"
+config/name="flumberboozle-client"
 run/main_scene="uid://btvow855xem8r"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Global="*res://scenes/global.gd"
+Utils="*res://globals/utils.gd"
+SignalBus="*res://globals/signal_bus.gd"
+Network="*res://globals/network.gd"
 
 [editor_plugins]
 

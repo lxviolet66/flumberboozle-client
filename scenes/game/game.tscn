@@ -1,0 +1,17 @@
+[gd_scene load_steps=6 format=3 uid="uid://btvow855xem8r"]
+
+[ext_resource type="Script" uid="uid://cdn3qpkx0pwkt" path="res://scenes/game/game.gd" id="1_lfrn8"]
+[ext_resource type="PackedScene" uid="uid://3uwewh8rm1yb" path="res://scenes/test_player/test_player.tscn" id="2_lfrn8"]
+[ext_resource type="PackedScene" uid="uid://ubj17kff76ux" path="res://scenes/main_menu/main_menu.tscn" id="3_5i0tg"]
+[ext_resource type="PackedScene" uid="uid://b2jgqjhixhtun" path="res://scenes/map/map.tscn" id="4_bdhmt"]
+[ext_resource type="Script" uid="uid://cfkry1p1enyg7" path="res://scenes/playerlist/playerlist.gd" id="6_5i0tg"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_lfrn8")
+MainMenu = ExtResource("3_5i0tg")
+
+[node name="Map" parent="." instance=ExtResource("4_bdhmt")]
+
+[node name="Playerlist" type="Node" parent="."]
+script = ExtResource("6_5i0tg")
+PlayerScene = ExtResource("2_lfrn8")
