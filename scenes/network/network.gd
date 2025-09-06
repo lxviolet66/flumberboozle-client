@@ -3,6 +3,12 @@ extends Node
 ## something more like "network" or "client"
 
 
+@export_group("Scenes")
+@export var PlayerScene: PackedScene
+
+@export_group("Nodes")
+@export var Playerlist: Node
+
 var this_peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
 
 var server_ip = "127.0.0.1"
@@ -15,17 +21,18 @@ var ConnectButton: Button
 
 var Player: RigidBody3D
 
-@export_group("Scenes")
-@export var PlayerScene: PackedScene
-
-@onready var Playerlist: Node = Utils.find_node("Playerlist")
-
 
 func _ready() -> void:
 	SignalBus.menu_loaded.connect(_on_menu_loaded)
 
 
 func connect_to_server() -> void:
+	# I have no idea why this is needed, but for some reason it seems that the
+	# multiplayer signals get connected twice without checking if we're the
+	# multiplayer authorityq
+	if not is_multiplayer_authority():
+		return
+		
 	var error: Error = this_peer.create_client(server_ip, server_port)
 	if error != OK:
 		push_error("Failed to create client with error code %s" % error)
@@ -39,34 +46,26 @@ func disconnect_from_server() -> void:
 	pass
 	# TODO: Implement functionality to disconnect, such that you can leave a
 	# game then rejoin another without having to reopen the application
-	
-	
-func remove_player(peer_id: int):
-	if not Playerlist.has_node(str(peer_id)):
-		return
-		
-	Playerlist.get_node(str(peer_id)).queue_free()
-
-
-@rpc("any_peer", "call_remote", "unreliable_ordered")
-func sync_transforms(peer_id: int, transforms) -> void:
-	if peer_id == this_peer.get_unique_id():
-		return
-	var player: RigidBody3D = Playerlist.find_child(str(peer_id))
-	player.position = transforms["Position"]
-	player.rotation = transforms["Rotation"]
 
 
 @rpc("authority", "call_remote", "reliable")
-func populate_players(peer_ids: Array[int]) -> void:
+func add_player(peer_id) -> void:
+	var ThisPlayer: CharacterBody3D = PlayerScene.instantiate()
+	ThisPlayer.name = str(peer_id)
+	ThisPlayer.set_multiplayer_authority(peer_id)
+	Playerlist.add_child(ThisPlayer)
+
+
+@rpc("authority", "call_remote", "reliable")
+func add_existing_players(peer_ids: Array[int]) -> void:
 	for id in peer_ids:
-		SignalBus.add_player.emit(id)
+		add_player(id)
 
 
 ## Called on each peer once when they connect
 @rpc("authority", "call_remote", "reliable")
 func once_per_peer() -> void:
-	print("Connection established!\n")
+	print("Welcome to purgatory!\n")
 	SignalBus.game_started.emit()
 
 

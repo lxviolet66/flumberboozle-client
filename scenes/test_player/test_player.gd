@@ -10,9 +10,6 @@ var degrees_per_unit: float = 0.001
 
 var motion: Vector2
 
-#var seconds_per_transform_sync: = 0.05 # 3 60fps frames
-#var seconds_since_last_transform_sync: float = 0.0
-
 var input_dir: Vector3
 var mouse_input: Vector2
 
@@ -28,20 +25,9 @@ func _ready() -> void:
 	Input.set_use_accumulated_input(false)
 
 
-#func _process(delta: float) -> void:
-	#seconds_since_last_transform_sync += delta
-	#if seconds_since_last_transform_sync >= seconds_per_transform_sync:
-		#seconds_since_last_transform_sync = 0.0
-		#Network.sync_transforms.rpc_id(
-				#1, # The servers Peer ID is always 1
-				#Dictionary({
-					#"Position": position,
-					#"Rotation": rotation,
-				#})
-		#)
-
-
 func _physics_process(_delta: float) -> void:
+	if not is_multiplayer_authority():
+		return
 	handle_input()
 
 	var direction: Vector3 = transform.basis * input_dir.normalized()

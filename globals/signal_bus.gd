@@ -10,6 +10,4 @@ extends Node
 signal game_started
 signal game_ended
 signal menu_loaded
-# Triggers
-signal add_player(peer_id)
 @warning_ignore_restore("unused_signal")
