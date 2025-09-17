@@ -14,8 +14,8 @@ var input_dir: Vector3
 var mouse_input: Vector2
 
 @export_group("Nodes")
-@export var VeryImportantNode: Node3D# = Utils.find_node("VeryImportantNode")
-@export var Synchronizer: MultiplayerSynchronizer# = Utils.find_node("Synchronizer")
+@export var VeryImportantNode: Node3D
+@export var Synchronizer: MultiplayerSynchronizer
 
 
 func _ready() -> void:
