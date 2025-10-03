@@ -36,7 +36,7 @@ const WALLRUN_SNAP_LENGTH: float = AIR_SNAP_LENGTH
 
 # this is not a "speed cap", just when to stop applying gravity.
 # there will perhaps maybe in future be something that lets you instantly set
-# your velocity to this
+# your velocity to this (basically stolen from downshift from parkour legacy)
 const TERMINAL_VELOCITY: float = 100.0
 
 var ground_speed: float = 15.0
@@ -45,7 +45,7 @@ var slide_speed: float = 15.0
 var wallrun_speed: float = 20.0
 
 var gravity_strength: float = 1.0
-# This vector is the direction of gravity. This is a mutible variable.
+# This vector is the direction of gravity. This is a mutable variable.
 # In other words: Freedom, imprisonment, it's all an illusion.
 # Gravity, is a harness. I have harnessed the harness
 var gravity_vector := Vector3(0, -1, 0).normalized() * gravity_strength
