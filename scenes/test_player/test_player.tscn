@@ -11,10 +11,8 @@ properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
-[node name="TestPlayer" type="CharacterBody3D" node_paths=PackedStringArray("VeryImportantNode", "Synchronizer")]
+[node name="TestPlayer" type="CharacterBody3D"]
 script = ExtResource("1_a7qwl")
-VeryImportantNode = NodePath("VeryImportantNode")
-Synchronizer = NodePath("Synchronizer")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_e7mys")

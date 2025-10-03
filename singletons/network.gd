@@ -1,18 +1,13 @@
 extends Node
-## Named "server" to match up with RPCs on server, more accurate name would be
-## something more like "network" or "client"
+## Handles all networking with the server, including some synchronization
+## (especially of players)
 
 
-@export_group("Scenes")
-@export var PlayerScene: PackedScene
+var this_peer := ENetMultiplayerPeer.new()
 
-@export_group("Nodes")
-@export var Playerlist: Node
-
-var this_peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
-
-var server_ip = "127.0.0.1"
-var server_port = 24727
+var server_ip: String = "127.0.0.1"
+var server_port: int = 24727
+var active_connection: bool = false
 
 var MainMenu: Control
 var IpEntry: LineEdit
@@ -21,16 +16,17 @@ var ConnectButton: Button
 
 var Player: RigidBody3D
 
+@onready var PlayerScene := preload("res://scenes/player/player.tscn")
+@onready var Playerlist: Node = Utils.find_node("Playerlist")
+
 
 func _ready() -> void:
 	SignalBus.menu_loaded.connect(_on_menu_loaded)
 
 
 func connect_to_server() -> void:
-	# I have no idea why this is needed, but for some reason it seems that the
-	# multiplayer signals get connected twice without checking if we're the
-	# multiplayer authorityq
-	if not is_multiplayer_authority():
+	# Without this line, the signals connect twice. Idk why ¯\_(ツ)_/¯
+	if active_connection and not is_multiplayer_authority():
 		return
 		
 	var error: Error = this_peer.create_client(server_ip, server_port)
@@ -46,11 +42,12 @@ func disconnect_from_server() -> void:
 	pass
 	# TODO: Implement functionality to disconnect, such that you can leave a
 	# game then rejoin another without having to reopen the application
+	# I'm really procrastinating this it sounds hard
 
 
 @rpc("authority", "call_remote", "reliable")
 func add_player(peer_id) -> void:
-	var ThisPlayer: CharacterBody3D = PlayerScene.instantiate()
+	var ThisPlayer: RigidBody3D = PlayerScene.instantiate()
 	ThisPlayer.name = str(peer_id)
 	ThisPlayer.set_multiplayer_authority(peer_id)
 	Playerlist.add_child(ThisPlayer)
@@ -87,7 +84,8 @@ func _on_connect_button_pressed() -> void:
 
 
 func _on_connected_to_server() -> void:
-	print("Reached server...\n")
+	active_connection = true
+	print("Connected to server!\n")
 
 
 func _on_connection_failed() -> void:

@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2jgqjhixhtun"]
+[gd_scene load_steps=6 format=3 uid="uid://b2jgqjhixhtun"]
+
+[ext_resource type="Texture2D" uid="uid://byn2vtdx1kqbh" path="res://addons/kenney_prototype_textures/purple/texture_10.png" id="1_sxf4j"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_hrmi8"]
 rayleigh_coefficient = 0.0
@@ -22,8 +24,12 @@ fog_aerial_perspective = 0.511
 adjustment_enabled = true
 adjustment_saturation = 2.05
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tqkkf"]
+albedo_texture = ExtResource("1_sxf4j")
+uv1_scale = Vector3(25, 1, 25)
+uv1_triplanar = true
+
 [node name="Map" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.76837e-07, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.906308, -0.187911, -0.378544, 0, -0.895712, 0.444635, -0.422618, -0.402976, -0.811791, 0.588102, 0.137832, -0.482186)
@@ -32,4 +38,6 @@ transform = Transform3D(0.906308, -0.187911, -0.378544, 0, -0.895712, 0.444635, 
 environment = SubResource("Environment_hrmi8")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(25, 0, 0, 0, 1, 0, 0, 0, 25, 0, -2.24876, 0)
+transform = Transform3D(25, 0, 0, 0, 1, 0, 0, 0, 25, 0, -3.002, 0)
+use_collision = true
+material = SubResource("StandardMaterial3D_tqkkf")
