@@ -1,5 +1,7 @@
 extends RigidBody3D
 
+## TODO: write a documentation comment hehe
+
 
 enum Movestates {
 	#GROUNDED_WALK,
@@ -18,29 +20,29 @@ enum Movestates {
 
 const GROUND_ACCEL: float = 2.0
 const GROUND_DRAG: float = 13.0
-# If the length of the velocity vectors horizontal components
-# go below this, they get snapped to 0
 const GROUND_SNAP_LENGTH: float = 0.2
 
 const AIR_ACCEL: float = 0.1
-const AIR_DRAG: float = 0.1 # maybe just 0 air drag? 
+const AIR_DRAG: float = 0.1 # maybe just 0 air drag? that might feel nicer
 const AIR_SNAP_LENGTH: float = 0.1
 
 const SLIDE_ACCEL: float = 0.3
-const SLIDE_DRAG: float = 2
+const SLIDE_DRAG: float = 2.0
+const SLIDE_SNAP_LENGTH: float = GROUND_SNAP_LENGTH
 
-const WALLRUN_ACCEL: float = 0
-const WALLRUN_DRAG: float = 0
+const WALLRUN_ACCEL: float = 0.0
+const WALLRUN_DRAG: float = 0.0
+const WALLRUN_SNAP_LENGTH: float = AIR_SNAP_LENGTH
 
 # this is not a "speed cap", just when to stop applying gravity.
 # there will perhaps maybe in future be something that lets you instantly set
 # your velocity to this
-const TERMINAL_VELOCITY: float = 100
+const TERMINAL_VELOCITY: float = 100.0
 
 var ground_speed: float = 15.0
 var air_speed: float = 15.0
 var slide_speed: float = 15.0
-var wallrun_speed: float = 20
+var wallrun_speed: float = 20.0
 
 var gravity_strength: float = 1.0
 # This vector is the direction of gravity. This is a mutible variable.
@@ -62,6 +64,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	var speed: float = x["speed"]
 	var accel: float = x["accel"]
 	var drag: float = x["drag"]
+	var snap_length: float = x["snap_length"]
 	
 	var wish_dir: Vector2 = Inputinator.get_wish_dir()
 	wish_dir = wish_dir.rotated(-Camera.rotation.y)
@@ -91,7 +94,7 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	linear_velocity += gravity_vector
 	
 	# Snap horizontal velocity to 0 if it's small enough
-	if (linear_velocity * Vector3(1, 0, 1)).length() < GROUND_SNAP_LENGTH:
+	if (linear_velocity * Vector3(1, 0, 1)).length() < snap_length:
 		linear_velocity *= Vector3(0, 1, 0)
 	
 	print(wish_dir, wish_vel, linear_velocity)
@@ -104,24 +107,28 @@ func get_movestate_stats(movestate) -> Dictionary[String, float]:
 				"speed": ground_speed,
 				"accel": GROUND_ACCEL,
 				"drag": GROUND_DRAG,
+				"snap_length": GROUND_SNAP_LENGTH,
 			}
 		Movestates.AIR:
 			return {
 				"speed": air_speed,
 				"accel": AIR_ACCEL,
 				"drag": AIR_DRAG,
+				"snap_length": AIR_SNAP_LENGTH,
 			}
 		Movestates.SLIDE:
 			return {
 				"speed": slide_speed,
 				"accel": SLIDE_ACCEL,
 				"drag": SLIDE_DRAG,
+				"snap_length": SLIDE_SNAP_LENGTH,
 			}
 		Movestates.WALLRUN:
 			return {
 				"speed": wallrun_speed,
 				"accel": WALLRUN_ACCEL,
 				"drag": WALLRUN_DRAG,
+				"snap_length": WALLRUN_SNAP_LENGTH,
 			}
 	
 	# this should never happen, and exists just to shut up a godot warning

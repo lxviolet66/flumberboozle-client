@@ -1,4 +1,5 @@
 extends Node
+
 ## Used for transfering signals across scenes/nodes or across nodes that may
 ## not exist yet
 

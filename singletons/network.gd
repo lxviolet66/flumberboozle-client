@@ -67,6 +67,8 @@ func once_per_peer() -> void:
 
 
 func _on_menu_loaded() -> void:
+	# put thsese mnodes in a group and find them
+	# with that, seraching the tree isn't beery goodd
 	MainMenu = Utils.find_node("MainMenu")
 	IpEntry = Utils.find_node("IpEntry")
 	PortEntry = Utils.find_node("PortEntry")

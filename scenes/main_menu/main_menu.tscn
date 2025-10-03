@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ubj17kff76ux"]
+[gd_scene load_steps=3 format=3 uid="uid://ubj17kff76ux"]
 
 [ext_resource type="Script" uid="uid://du4lg0pxvg3md" path="res://scenes/main_menu/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="Script" uid="uid://bakx836mm7prn" path="res://scenes/main_menu/label.gd" id="2_0ebjn"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -13,7 +14,7 @@ script = ExtResource("1_l6cm7")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_direction = 3
-layout_mode = 2
+layout_mode = 0
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -39,18 +40,27 @@ layout_mode = 2
 theme_override_constants/separation = 5
 alignment = 1
 
-[node name="HSlider" type="HSlider" parent="VBoxContainer/HBoxContainer"]
+[node name="PortLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Port:"
+
+[node name="PortSlider" type="HSlider" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 min_value = 1024.0
 max_value = 65535.0
-value = 1024.0
+value = 65535.0
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="EnteredPortLabel" type="Label" parent="VBoxContainer" node_paths=PackedStringArray("PortSlider")]
 layout_mode = 2
-size_flags_vertical = 8
-text = "Port:"
+size_flags_horizontal = 4
+text = "65565"
+script = ExtResource("2_0ebjn")
+PortSlider = NodePath("../HBoxContainer/PortSlider")
 
 [node name="ConnectButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Connect"
+
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer/PortSlider" to="VBoxContainer/EnteredPortLabel" method="_on_port_slider_value_changed"]

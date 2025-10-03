@@ -66,5 +66,6 @@ func fetch_rotation_difference() -> Vector2:
 	return return_value
 
 
+## wish_dir getter
 func get_wish_dir() -> Vector2:
 	return wish_dir
