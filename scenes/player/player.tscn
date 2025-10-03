@@ -12,12 +12,13 @@ friction = 0.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dovo2"]
 
-[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("Camera")]
+[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("Camera", "GroundShapeCast")]
 physics_material_override = SubResource("PhysicsMaterial_dovo2")
 gravity_scale = 0.0
 lock_rotation = true
 script = ExtResource("1_8afob")
 Camera = NodePath("PlayerCamera")
+GroundShapeCast = NodePath("GroundShapeCast")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_u8vuu")

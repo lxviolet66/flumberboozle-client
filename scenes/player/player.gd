@@ -14,12 +14,17 @@ enum Movestates {
 
 @export_category("Nodes")
 @export var Camera: Camera3D
+@export var GroundShapeCast: ShapeCast3D
 
 const GROUND_ACCEL: float = 2.0
 const GROUND_DRAG: float = 13.0
+# If the length of the velocity vectors horizontal components
+# go below this, they get snapped to 0
+const GROUND_SNAP_LENGTH: float = 0.2
 
 const AIR_ACCEL: float = 0.1
 const AIR_DRAG: float = 0.1 # maybe just 0 air drag? 
+const AIR_SNAP_LENGTH: float = 0.1
 
 const SLIDE_ACCEL: float = 0.3
 const SLIDE_DRAG: float = 2
@@ -41,9 +46,13 @@ var gravity_strength: float = 1.0
 # This vector is the direction of gravity. This is a mutible variable.
 # In other words: Freedom, imprisonment, it's all an illusion.
 # Gravity, is a harness. I have harnessed the harness
-var gravity_vec := Vector3(0, -1, 0).normalized() * gravity_strength
+var gravity_vector := Vector3(0, -1, 0).normalized() * gravity_strength
 
 var current_movestate: Movestates = Movestates.GROUND
+
+
+func _physics_process(_delta) -> void:
+	pass
 
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
@@ -79,7 +88,12 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 				state.step, # functionally identical to `delta` it seems
 		)
 	
-	linear_velocity += gravity_vec
+	linear_velocity += gravity_vector
+	
+	# Snap horizontal velocity to 0 if it's small enough
+	if (linear_velocity * Vector3(1, 0, 1)).length() < GROUND_SNAP_LENGTH:
+		linear_velocity *= Vector3(0, 1, 0)
+	
 	print(wish_dir, wish_vel, linear_velocity)
 
 
