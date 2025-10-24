@@ -7,7 +7,7 @@ var this_peer := ENetMultiplayerPeer.new()
 
 var server_ip: String = "127.0.0.1"
 var server_port: int = 24727
-var active_connection: bool = false
+var actively_connected: bool = false
 
 var MainMenu: Control
 var IpEntry: LineEdit
@@ -25,8 +25,8 @@ func _ready() -> void:
 
 
 func connect_to_server() -> void:
-	# Without this line, the signals connect twice. Idk why ¯\_(ツ)_/¯
-	if active_connection and not is_multiplayer_authority():
+	# HACK Without this, the signals connect twice. Idk why ¯\_(ツ)_/¯
+	if actively_connected and not is_multiplayer_authority():
 		return
 		
 	var error: Error = this_peer.create_client(server_ip, server_port)
@@ -86,7 +86,7 @@ func _on_connect_button_pressed() -> void:
 
 
 func _on_connected_to_server() -> void:
-	active_connection = true
+	actively_connected = true
 	print("Connected to server!\n")
 
 
