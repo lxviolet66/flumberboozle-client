@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bukci33ldbdot"]
+[gd_scene load_steps=7 format=3 uid="uid://bukci33ldbdot"]
 
 [ext_resource type="Script" uid="uid://x5c4olswac4i" path="res://scenes/player/player.gd" id="1_8afob"]
 [ext_resource type="Script" uid="uid://c1xls8mvby8e4" path="res://scenes/player/camera.gd" id="2_dovo2"]
@@ -9,13 +9,31 @@ friction = 0.0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_u8vuu"]
 
-[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("Camera", "GroundShapeCast")]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gmlin"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:linear_velocity")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("Camera", "GroundArea", "WishJumpLabel", "WishSlideLabel", "WishDirLabel", "WishVelLabel", "PositionLabel", "VelocityLabel", "CoyoteTimeLabel", "MovestateLabel") groups=["Player PhysicsBody3Ds"]]
 physics_material_override = SubResource("PhysicsMaterial_dovo2")
 gravity_scale = 0.0
 lock_rotation = true
+linear_damp_mode = 1
+angular_damp_mode = 1
 script = ExtResource("1_8afob")
 Camera = NodePath("PlayerCamera")
-GroundShapeCast = NodePath("")
+GroundArea = NodePath("GroundArea")
+WishJumpLabel = NodePath("Control/GridContainer/WishJumpValue")
+WishSlideLabel = NodePath("Control/GridContainer/WishSlideValue")
+WishDirLabel = NodePath("Control/GridContainer/WishDirValue")
+WishVelLabel = NodePath("Control/GridContainer/WishVelValue")
+PositionLabel = NodePath("Control/GridContainer/PositionValue")
+VelocityLabel = NodePath("Control/GridContainer/VelocityValue")
+CoyoteTimeLabel = NodePath("Control/GridContainer/CoyoteTimeValue")
+MovestateLabel = NodePath("Control/GridContainer/MovestateValue")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_u8vuu")
@@ -29,8 +47,130 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 top_level = true
 script = ExtResource("2_dovo2")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="GroundArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.001, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GroundArea"]
 shape = ExtResource("2_gmlin")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_gmlin")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GridContainer" type="GridContainer" parent="Control"]
+layout_mode = 0
+offset_right = 144.0
+offset_bottom = 139.0
+theme_override_constants/h_separation = 4
+columns = 3
+
+[node name="WishJumpTitle" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "WishJump"
+
+[node name="VSeparator" type="VSeparator" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="WishJumpValue" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "false"
+
+[node name="WishSlideTitle" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+text = "WishSlide"
+
+[node name="VSeparator2" type="VSeparator" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="WishSlideValue" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "false"
+
+[node name="WishDirTitle" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "WishDir"
+
+[node name="VSeparator3" type="VSeparator" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="WishDirValue" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "(0, 0)"
+
+[node name="WishVelTitle" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+text = "WishVeloc"
+
+[node name="VSeparator4" type="VSeparator" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="WishVelValue" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "(0, 0)"
+
+[node name="PositionTitle" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+text = "Position"
+
+[node name="VSeparator5" type="VSeparator" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="PositionValue" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "(0, 0, 0)"
+
+[node name="VelocityTitle" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+text = "Velocity"
+
+[node name="VSeparator6" type="VSeparator" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="VelocityValue" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "0.0"
+
+[node name="CoyoteTimeTitle" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+text = "Movestate"
+
+[node name="VSeparator7" type="VSeparator" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="CoyoteTimeValue" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "0"
+
+[node name="MovestateTitle" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+text = "Movestate"
+
+[node name="VSeparator8" type="VSeparator" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="MovestateValue" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "0"
