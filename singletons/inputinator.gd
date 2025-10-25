@@ -1,5 +1,7 @@
 extends Node
 
+# TODO: this is actually kinda shit, put all the input code inside player.gd
+
 ## ZIS IS DAS "INPUTINATOR 6000"
 ##
 ## IT RECEIVES EIN INPUT AND DAS INPUT GETS INATORED
