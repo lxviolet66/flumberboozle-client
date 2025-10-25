@@ -33,6 +33,7 @@ uv1_triplanar = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.906308, -0.187911, -0.378544, 0, -0.895712, 0.444635, -0.422618, -0.402976, -0.811791, 0.588102, 0.137832, -0.482186)
+light_energy = 0.1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_hrmi8")
