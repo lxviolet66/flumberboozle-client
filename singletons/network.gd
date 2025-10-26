@@ -2,7 +2,6 @@ extends Node
 ## Handles all networking with the server, including some synchronization
 ## (especially of players)
 
-
 var this_peer := ENetMultiplayerPeer.new()
 
 var server_ip: String = "127.0.0.1"
