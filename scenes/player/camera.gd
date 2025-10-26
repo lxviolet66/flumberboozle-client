@@ -7,7 +7,7 @@ var rotation_difference
 
 
 func _physics_process(_delta: float) -> void:
-	rotation_difference = Inputinator.fetch_rotation_difference()
+	rotation_difference = Player.fetch_rotation_difference()
 	rotation_degrees -= Vector3(
 			rotation_difference.y, rotation_difference.x, 0.0
 	)

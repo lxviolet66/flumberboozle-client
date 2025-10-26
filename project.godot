@@ -18,7 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Coordinateinator="*res://singletons/coordinateinator.gd"
-Inputinator="*res://singletons/inputinator.gd"
+Inputinator="res://singletons/inputinator.gd"
 Utils="*res://singletons/utils.gd"
 SignalBus="*res://singletons/signal_bus.gd"
 Network="*res://singletons/network.gd"

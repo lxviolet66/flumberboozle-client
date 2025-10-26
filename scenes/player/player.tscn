@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bukci33ldbdot"]
+[gd_scene load_steps=8 format=3 uid="uid://bukci33ldbdot"]
 
 [ext_resource type="Script" uid="uid://x5c4olswac4i" path="res://scenes/player/player.gd" id="1_8afob"]
 [ext_resource type="Script" uid="uid://c1xls8mvby8e4" path="res://scenes/player/camera.gd" id="2_dovo2"]
@@ -6,6 +6,12 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dovo2"]
 friction = 0.0
+
+[sub_resource type="Curve" id="Curve_gmlin"]
+_limits = [1.0, 2.0, 0.0, 180.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(45, 2), 0.0, 0.0, 0, 0, Vector2(90, 1), 0.0, 0.0, 0, 0, Vector2(180, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+metadata/_snap_count = 100
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_u8vuu"]
 
@@ -17,7 +23,7 @@ properties/1/path = NodePath(".:linear_velocity")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("Camera", "GroundArea", "WishJumpLabel", "WishSlideLabel", "WishDirLabel", "WishVelLabel", "PositionLabel", "VelocityLabel", "CoyoteTimeLabel", "MovestateLabel") groups=["Player PhysicsBody3Ds"]]
+[node name="Player" type="RigidBody3D" node_paths=PackedStringArray("Camera", "GroundArea", "WishJumpLabel", "WishSlideLabel", "WishDirLabel", "WishVelLabel", "PositionLabel", "HorizontalVelocityLabel", "VerticalVelocityLabel", "CoyoteTimeLabel", "MovestateLabel") groups=["Player PhysicsBody3Ds"]]
 physics_material_override = SubResource("PhysicsMaterial_dovo2")
 gravity_scale = 0.0
 lock_rotation = true
@@ -31,9 +37,11 @@ WishSlideLabel = NodePath("Control/GridContainer/WishSlideValue")
 WishDirLabel = NodePath("Control/GridContainer/WishDirValue")
 WishVelLabel = NodePath("Control/GridContainer/WishVelValue")
 PositionLabel = NodePath("Control/GridContainer/PositionValue")
-VelocityLabel = NodePath("Control/GridContainer/VelocityValue")
+HorizontalVelocityLabel = NodePath("Control/GridContainer/HorizontalVelocityValue")
+VerticalVelocityLabel = NodePath("Control/GridContainer/VerticalVelocityValue")
 CoyoteTimeLabel = NodePath("Control/GridContainer/CoyoteTimeValue")
 MovestateLabel = NodePath("Control/GridContainer/MovestateValue")
+strafe_curve = SubResource("Curve_gmlin")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_u8vuu")
@@ -48,7 +56,6 @@ top_level = true
 script = ExtResource("2_dovo2")
 
 [node name="GroundArea" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.001, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GroundArea"]
 shape = ExtResource("2_gmlin")
@@ -136,24 +143,37 @@ layout_mode = 2
 size_flags_horizontal = 2
 text = "(0, 0, 0)"
 
-[node name="VelocityTitle" type="Label" parent="Control/GridContainer"]
+[node name="HorizontalVelocityTitle" type="Label" parent="Control/GridContainer"]
 layout_mode = 2
-text = "Velocity"
+text = "H Velocity"
 
 [node name="VSeparator6" type="VSeparator" parent="Control/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
 
-[node name="VelocityValue" type="Label" parent="Control/GridContainer"]
+[node name="HorizontalVelocityValue" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "0.0"
+
+[node name="VerticalVelocityTitle" type="Label" parent="Control/GridContainer"]
+layout_mode = 2
+text = "V Velocity"
+
+[node name="VSeparator7" type="VSeparator" parent="Control/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="VerticalVelocityValue" type="Label" parent="Control/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
 text = "0.0"
 
 [node name="CoyoteTimeTitle" type="Label" parent="Control/GridContainer"]
 layout_mode = 2
-text = "Movestate"
+text = "Coyote Time"
 
-[node name="VSeparator7" type="VSeparator" parent="Control/GridContainer"]
+[node name="VSeparator8" type="VSeparator" parent="Control/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
 
@@ -166,7 +186,7 @@ text = "0"
 layout_mode = 2
 text = "Movestate"
 
-[node name="VSeparator8" type="VSeparator" parent="Control/GridContainer"]
+[node name="VSeparator9" type="VSeparator" parent="Control/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
 
