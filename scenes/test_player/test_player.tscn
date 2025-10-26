@@ -31,32 +31,3 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 
 
 [node name="Synchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_3d613")
-
-[node name="Hud" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="DebugInformation" type="VBoxContainer" parent="Hud"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 158.0
-
-[node name="WishJump" type="Label" parent="Hud/DebugInformation"]
-layout_mode = 2
-
-[node name="WishSlide" type="Label" parent="Hud/DebugInformation"]
-layout_mode = 2
-
-[node name="WishDir" type="Label" parent="Hud/DebugInformation"]
-layout_mode = 2
-
-[node name="WishVel" type="Label" parent="Hud/DebugInformation"]
-layout_mode = 2
-
-[node name="Velocity" type="Label" parent="Hud/DebugInformation"]
-layout_mode = 2
-
-[node name="Movestate" type="Label" parent="Hud/DebugInformation"]
-layout_mode = 2
