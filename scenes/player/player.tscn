@@ -1,17 +1,86 @@
-[gd_scene load_steps=8 format=3 uid="uid://bukci33ldbdot"]
+[gd_scene load_steps=26 format=3 uid="uid://bukci33ldbdot"]
 
 [ext_resource type="Script" uid="uid://x5c4olswac4i" path="res://scenes/player/player.gd" id="1_8afob"]
 [ext_resource type="Script" uid="uid://c1xls8mvby8e4" path="res://scenes/player/camera.gd" id="2_dovo2"]
 [ext_resource type="Shape3D" uid="uid://sv5fopvaplyv" path="res://scenes/player/player_hitbox.tres" id="2_gmlin"]
+[ext_resource type="Script" uid="uid://cgs0670ldgfte" path="res://scenes/player/velocity_line.gd" id="4_lvxji"]
+[ext_resource type="Script" uid="uid://yl7olf5p1wqw" path="res://scenes/player/wish_vel_line.gd" id="5_p47bc"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dovo2"]
 friction = 0.0
 
 [sub_resource type="Curve" id="Curve_gmlin"]
-_limits = [1.0, 2.0, 0.0, 180.0]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(45, 2), 0.0, 0.0, 0, 0, Vector2(90, 1), 0.0, 0.0, 0, 0, Vector2(180, 1), 0.0, 0.0, 0, 0]
+_limits = [1.0, 1.5023923, 0.0, 180.0]
+bake_resolution = 180
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(45, 1.5023923), 0.0, 0.0, 0, 0, Vector2(90, 1), 0.0, 0.0, 0, 0, Vector2(180, 1), 0.0, 0.0, 0, 0]
 point_count = 4
 metadata/_snap_count = 100
+
+[sub_resource type="Curve" id="Curve_5gtgg"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_qek5x"]
+_limits = [0.0, 3.0, 0.0, 3.0]
+_data = [Vector2(0, 3), 0.0, -0.6634769, 0, 1, Vector2(3, 1.0095694), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_0owmy"]
+_limits = [0.0, 4.0, 0.0, 3.0]
+_data = [Vector2(0, 4), 0.0, -1.0013585, 0, 1, Vector2(3, 0.99592423), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_p47bc"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_75vfm"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_h17s1"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_je7p5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_fm80t"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_gx1jg"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_ugbui"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_fcs02"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_myrg7"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_kvlxm"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_uf5tr"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_lgqa7"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_8ydkj"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_u8vuu"]
 
@@ -42,6 +111,22 @@ VerticalVelocityLabel = NodePath("Control/GridContainer/VerticalVelocityValue")
 CoyoteTimeLabel = NodePath("Control/GridContainer/CoyoteTimeValue")
 MovestateLabel = NodePath("Control/GridContainer/MovestateValue")
 strafe_curve = SubResource("Curve_gmlin")
+ground_speed_curve = SubResource("Curve_5gtgg")
+ground_accel_curve = SubResource("Curve_qek5x")
+ground_drag_curve = SubResource("Curve_0owmy")
+ground_snap_speed_curve = SubResource("Curve_p47bc")
+air_speed_curve = SubResource("Curve_75vfm")
+air_accel_curve = SubResource("Curve_h17s1")
+air_drag_curve = SubResource("Curve_je7p5")
+air_snap_speed_curve = SubResource("Curve_fm80t")
+slide_speed_curve = SubResource("Curve_gx1jg")
+slide_accel_curve = SubResource("Curve_ugbui")
+slide_drag_curve = SubResource("Curve_fcs02")
+slide_snap_speed_curve = SubResource("Curve_myrg7")
+wallrun_speed_curve = SubResource("Curve_kvlxm")
+wallrun_accel_curve = SubResource("Curve_uf5tr")
+wallrun_drag_curve = SubResource("Curve_lgqa7")
+wallrun_snap_speed_curve = SubResource("Curve_8ydkj")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_u8vuu")
@@ -68,6 +153,25 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="VelocityLine" type="Line2D" parent="Control" node_paths=PackedStringArray("Player", "Camera")]
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+script = ExtResource("4_lvxji")
+Player = NodePath("../..")
+Camera = NodePath("../../PlayerCamera")
+metadata/_custom_type_script = "uid://dki68rfovc6d5"
+
+[node name="WishVelLine" type="Line2D" parent="Control" node_paths=PackedStringArray("Player", "Camera")]
+z_index = -1
+begin_cap_mode = 2
+end_cap_mode = 2
+antialiased = true
+script = ExtResource("5_p47bc")
+Player = NodePath("../..")
+Camera = NodePath("../../PlayerCamera")
+metadata/_custom_type_script = "uid://dki68rfovc6d5"
 
 [node name="GridContainer" type="GridContainer" parent="Control"]
 layout_mode = 0
@@ -115,11 +219,11 @@ size_flags_horizontal = 2
 [node name="WishDirValue" type="Label" parent="Control/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "(0, 0)"
+text = "0.000 / 0.000"
 
 [node name="WishVelTitle" type="Label" parent="Control/GridContainer"]
 layout_mode = 2
-text = "WishVeloc"
+text = "WishVel"
 
 [node name="VSeparator4" type="VSeparator" parent="Control/GridContainer"]
 layout_mode = 2
@@ -128,7 +232,7 @@ size_flags_horizontal = 2
 [node name="WishVelValue" type="Label" parent="Control/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "(0, 0)"
+text = "0.000 / 0.000"
 
 [node name="PositionTitle" type="Label" parent="Control/GridContainer"]
 layout_mode = 2
@@ -141,7 +245,7 @@ size_flags_horizontal = 2
 [node name="PositionValue" type="Label" parent="Control/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "(0, 0, 0)"
+text = "0.000 / 0.000 / 0.000"
 
 [node name="HorizontalVelocityTitle" type="Label" parent="Control/GridContainer"]
 layout_mode = 2
@@ -154,7 +258,7 @@ size_flags_horizontal = 2
 [node name="HorizontalVelocityValue" type="Label" parent="Control/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "0.0"
+text = "0.000"
 
 [node name="VerticalVelocityTitle" type="Label" parent="Control/GridContainer"]
 layout_mode = 2
@@ -167,7 +271,7 @@ size_flags_horizontal = 2
 [node name="VerticalVelocityValue" type="Label" parent="Control/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "0.0"
+text = "0.000"
 
 [node name="CoyoteTimeTitle" type="Label" parent="Control/GridContainer"]
 layout_mode = 2
@@ -180,7 +284,7 @@ size_flags_horizontal = 2
 [node name="CoyoteTimeValue" type="Label" parent="Control/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 2
-text = "0"
+text = "000"
 
 [node name="MovestateTitle" type="Label" parent="Control/GridContainer"]
 layout_mode = 2
