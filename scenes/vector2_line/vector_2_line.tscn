@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbe7bgkej80o8"]
+
+[ext_resource type="Script" uid="uid://dki68rfovc6d5" path="res://scenes/vector2_line/vector2_line.gd" id="1_l1krp"]
+
+[node name="Vector2Line" type="Line2D"]
+script = ExtResource("1_l1krp")
